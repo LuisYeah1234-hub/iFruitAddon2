@@ -39,13 +39,6 @@ namespace iFruitAddon2
 
         internal static string GetTempFilePath()
         {
-            if (!Directory.Exists(_mainDir))
-            {
-                Logger.Debug(_mainDir + " does not exists");
-                Logger.Debug("Creating main directory");
-                Directory.CreateDirectory(_mainDir);
-            }
-
             // Must be unique for the session but common to all mods adding contacts
             return Path.Combine(_mainDir, Process.GetCurrentProcess().Id.ToString() + ".tmp");
         }
@@ -57,6 +50,13 @@ namespace iFruitAddon2
 
             // Detecting Enhanced version
             _isEnhanced = Process.GetCurrentProcess().ProcessName.ToLower().Contains("enhanced");
+
+            if (!Directory.Exists(_mainDir))
+            {
+                Logger.Debug(_mainDir + " does not exists");
+                Logger.Debug("Creating main directory");
+                Directory.CreateDirectory(_mainDir);
+            }
 
             // Removing old temp files (if the game has crashed, the file were not deleted)
             Logger.Debug("Removing old temp files...");
